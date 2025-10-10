@@ -1,0 +1,39 @@
+{
+  "name": "blog-api-solid",
+  "version": "1.0.0",
+  "description": "",
+  "main": "server.js",
+  "type": "module",
+  "scripts": {
+    "start": "node dist/server.js",
+    "dev": "tsx watch src/server.ts",
+    "build": "tsup src --out-dir dist --format esm"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "packageManager": "pnpm@10.18.1",
+  "dependencies": {
+    "@fastify/compress": "^8.1.0",
+    "@fastify/cookie": "^11.0.2",
+    "@fastify/cors": "^11.1.0",
+    "@fastify/formbody": "^8.0.2",
+    "@fastify/helmet": "^13.0.2",
+    "@fastify/jwt": "^10.0.0",
+    "@fastify/multipart": "^9.2.1",
+    "@fastify/rate-limit": "^10.3.0",
+    "bcryptjs": "^3.0.2",
+    "close-with-grace": "^2.3.0",
+    "dotenv": "^17.2.3",
+    "fastify": "^5.6.1",
+    "mongoose": "^8.19.1",
+    "pino-pretty": "^13.1.2",
+    "zod": "^4.1.12"
+  },
+  "devDependencies": {
+    "@types/node": "^24.7.1",
+    "tsup": "^8.5.0",
+    "tsx": "^4.20.6",
+    "typescript": "^5.9.3"
+  }
+}
