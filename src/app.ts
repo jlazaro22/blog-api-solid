@@ -7,7 +7,7 @@ import fastifyJwt from '@fastify/jwt';
 import fastifyMultipart from '@fastify/multipart';
 import fastifyRateLimit from '@fastify/rate-limit';
 import fastify from 'fastify';
-import { v1Routes } from 'http/routes';
+import { v1Routes } from 'http/routes/v1';
 import { compressOptions } from 'lib/compress';
 
 import { corsOptions } from 'lib/cors';
