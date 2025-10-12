@@ -21,7 +21,7 @@ export async function updateCurrentUser(
 
     app.log.info(user, 'User updated successfully.');
 
-    return reply.code(200).send({ user, password: undefined });
+    return reply.code(200).send({ user });
   } catch (error) {
     app.log.error(error, 'Error while updating the current user.');
     throw error;
