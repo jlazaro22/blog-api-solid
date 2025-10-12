@@ -1,4 +1,5 @@
 import { FastifyInstance } from 'fastify';
+
 import { login } from 'http/controllers/v1/auth/login';
 import { logout } from 'http/controllers/v1/auth/logout';
 import { refreshToken } from 'http/controllers/v1/auth/refresh-token';

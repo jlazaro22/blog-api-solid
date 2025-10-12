@@ -100,6 +100,4 @@ userSchema.pre('save', async function (next) {
 
 const User = model<IUser>('User', userSchema);
 
-export type UserModelType = typeof User;
-
 export default User;

@@ -1,4 +1,4 @@
-import { Types } from 'mongoose';
+import { Document, Types } from 'mongoose';
 
 import User, { IUser } from 'models/user';
 import { IUsersRepository } from 'repositories/users-repository';
@@ -29,6 +29,29 @@ export class MongooseUsersRepository implements IUsersRepository {
       .select('username email password role')
       .lean()
       .exec();
+
+    return user;
+  }
+
+  async findByUserId(
+    userId: string,
+    asLean: boolean = true,
+    select?: string,
+  ): Promise<
+    | (Document<unknown, {}, IUser, {}, {}> &
+        IUser & {
+          _id: Types.ObjectId;
+        } & {
+          __v: number;
+        })
+    | null
+  > {
+    const id = new Types.ObjectId(userId);
+    const query = User.findOne(id).select(select || '-__v');
+
+    if (asLean) query.lean();
+
+    const user = await query.exec();
 
     return user;
   }
