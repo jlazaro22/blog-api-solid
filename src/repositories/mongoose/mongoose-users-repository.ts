@@ -56,6 +56,23 @@ export class MongooseUsersRepository implements IUsersRepository {
     return user;
   }
 
+  async count(): Promise<number> {
+    const count = await User.countDocuments();
+
+    return count;
+  }
+
+  async findAll(limit: number, offset: number): Promise<IUser[] | null> {
+    const users = await User.find()
+      .limit(limit)
+      .skip(offset)
+      .select('-__v')
+      .lean()
+      .exec();
+
+    return users;
+  }
+
   async create(data: IUser): Promise<IUser> {
     const user = await User.create(data);
 

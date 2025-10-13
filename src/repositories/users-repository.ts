@@ -29,6 +29,10 @@ export interface IUsersRepository {
     | null
   >;
 
+  count(): Promise<number>;
+
+  findAll(limit?: number, offset?: number): Promise<IUser[] | null>;
+
   create(user: IUser): Promise<IUser>;
 
   delete(userId: string): Promise<void>;
