@@ -3,7 +3,7 @@ import { Document, Types } from 'mongoose';
 import { IBlogsRepository } from 'repositories/blogs-repository';
 
 export class MongooseBlogsRepository implements IBlogsRepository {
-  async findByUserId(
+  async findAllByUserId(
     userId: string,
     useLean: boolean = true,
     select?: string,

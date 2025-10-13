@@ -1,4 +1,5 @@
 import { FastifyInstance } from 'fastify';
+import { deleteCurrentUser } from 'http/controllers/v1/user/delete-current-user';
 import { getCurrentUser } from 'http/controllers/v1/user/get-current-user';
 import { updateCurrentUser } from 'http/controllers/v1/user/update-current-user';
 
@@ -18,5 +19,11 @@ export async function userRoutes(app: FastifyInstance) {
     '/current',
     { onRequest: [authorize(['admin', 'user'])] },
     updateCurrentUser,
+  );
+
+  app.delete(
+    '/current',
+    { onRequest: authorize(['admin', 'user']) },
+    deleteCurrentUser,
   );
 }

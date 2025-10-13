@@ -2,7 +2,11 @@ import { IBlog } from 'models/blog';
 import { Document, Types } from 'mongoose';
 
 export interface IBlogsRepository {
-  findByUserId(userId: string): Promise<
+  findAllByUserId(
+    userId: string,
+    useLean?: boolean,
+    select?: string,
+  ): Promise<
     | (Document<unknown, {}, IBlog, {}, {}> &
         IBlog & {
           _id: Types.ObjectId;
