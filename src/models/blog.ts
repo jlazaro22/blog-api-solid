@@ -3,7 +3,7 @@ import { generateSlug } from 'utils';
 
 export interface IBlog {
   title: string;
-  slug: string;
+  slug?: string;
   content: string;
   banner: {
     publicId: string;
@@ -12,9 +12,9 @@ export interface IBlog {
     height: number;
   };
   author: Types.ObjectId;
-  viewsCount: number;
-  likesCount: number;
-  commentsCount: number;
+  viewsCount?: number;
+  likesCount?: number;
+  commentsCount?: number;
   status: 'draft' | 'published';
 }
 

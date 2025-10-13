@@ -26,6 +26,12 @@ export class MongooseBlogsRepository implements IBlogsRepository {
     return blogs;
   }
 
+  async create(data: IBlog): Promise<IBlog> {
+    const blog = await Blog.create(data);
+
+    return blog;
+  }
+
   async deleteAllByUserId(userId: string): Promise<void> {
     await Blog.deleteMany({ author: userId });
   }

@@ -33,7 +33,7 @@ export interface IUsersRepository {
 
   findAll(limit?: number, offset?: number): Promise<IUser[] | null>;
 
-  create(user: IUser): Promise<IUser>;
+  create(data: IUser): Promise<IUser>;
 
   delete(userId: string): Promise<void>;
 }

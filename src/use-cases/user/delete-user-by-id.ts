@@ -4,6 +4,7 @@ import { app } from 'app';
 import { IBlogsRepository } from 'repositories/blogs-repository';
 import { ITokensRepository } from 'repositories/tokens-repository';
 import { IUsersRepository } from 'repositories/users-repository';
+import { deleteFromCloudinary } from 'lib/cloudinary';
 
 interface IDeleteUserByIdUseCaseRequest {
   userId: string;
@@ -26,7 +27,7 @@ export class DeleteUserByIdUseCase {
     const publicIds = blogs?.map(({ banner }) => banner.publicId);
 
     if (publicIds?.length) {
-      await cloudinary.api.delete_resources(publicIds);
+      await deleteFromCloudinary(publicIds);
     }
 
     app.log.info(

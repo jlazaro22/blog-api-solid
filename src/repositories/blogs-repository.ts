@@ -16,5 +16,7 @@ export interface IBlogsRepository {
     | null
   >;
 
+  create(data: IBlog): Promise<IBlog>;
+
   deleteAllByUserId(userId: string): Promise<void>;
 }
