@@ -1,18 +1,18 @@
 import { MongooseBlogsRepository } from 'repositories/mongoose/mongoose-blogs-repository';
 import { MongooseTokensRepository } from 'repositories/mongoose/mongoose-tokens-repository';
 import { MongooseUsersRepository } from 'repositories/mongoose/mongoose-users-repository';
-import { DeleteCurrentUserUseCase } from 'use-cases/user/delete-current-user';
+import { DeleteUserByIdUseCase } from 'use-cases/user/delete-user-by-id';
 
-export function makeDeleteCurrentUserUseCase() {
+export function makeDeleteUserByIdUseCase() {
   const usersRepository = new MongooseUsersRepository();
   const tokensRepository = new MongooseTokensRepository();
   const blogsRepository = new MongooseBlogsRepository();
 
-  const deleteCurrentUserUseCase = new DeleteCurrentUserUseCase(
+  const deleteUserByIdUseCase = new DeleteUserByIdUseCase(
     usersRepository,
     blogsRepository,
     tokensRepository,
   );
 
-  return deleteCurrentUserUseCase;
+  return deleteUserByIdUseCase;
 }

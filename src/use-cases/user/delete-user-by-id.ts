@@ -5,18 +5,18 @@ import { IBlogsRepository } from 'repositories/blogs-repository';
 import { ITokensRepository } from 'repositories/tokens-repository';
 import { IUsersRepository } from 'repositories/users-repository';
 
-interface IDeleteCurrentUserUseCaseRequest {
+interface IDeleteUserByIdUseCaseRequest {
   userId: string;
 }
 
-export class DeleteCurrentUserUseCase {
+export class DeleteUserByIdUseCase {
   constructor(
     private usersRepository: IUsersRepository,
     private blogsRepository: IBlogsRepository,
     private tokensRepository: ITokensRepository,
   ) {}
 
-  async execute({ userId }: IDeleteCurrentUserUseCaseRequest) {
+  async execute({ userId }: IDeleteUserByIdUseCaseRequest) {
     const blogs = await this.blogsRepository.findAllByUserId(
       userId,
       true,

@@ -1,28 +1,21 @@
 import { FastifyReply, FastifyRequest } from 'fastify';
 
 import { app } from 'app';
-import { env } from 'env';
+import { getOrDeleteUserByIdParamsSchema } from 'http/validations/user';
 import { makeDeleteUserByIdUseCase } from 'use-cases/factories/make-delete-user-use-case';
 
-export async function deleteCurrentUser(
+export async function deleteUserById(
   request: FastifyRequest,
   reply: FastifyReply,
-): Promise<void> {
-  const userId = request.user.sub;
+) {
+  const { userId } = getOrDeleteUserByIdParamsSchema.parse(request.params);
 
   try {
     const deleteUserByIdUseCase = makeDeleteUserByIdUseCase();
 
     await deleteUserByIdUseCase.execute({ userId });
 
-    reply
-      .clearCookie('refreshToken', {
-        path: '/',
-        httpOnly: true,
-        secure: env.NODE_ENV === 'production',
-        sameSite: 'strict',
-      })
-      .code(204);
+    reply.code(204);
   } catch (error) {
     app.log.error(error, 'Error while deleting the user.');
     throw error;

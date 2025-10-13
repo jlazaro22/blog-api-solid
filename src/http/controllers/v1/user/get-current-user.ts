@@ -1,6 +1,6 @@
 import { app } from 'app';
 import { FastifyReply, FastifyRequest } from 'fastify';
-import { makeGetCurrentUserUseCase } from 'use-cases/factories/make-get-current-user-use-case';
+import { makeGetUserByIdUseCase } from 'use-cases/factories/make-get-user-by-id';
 
 export async function getCurrentUser(
   request: FastifyRequest,
@@ -9,9 +9,9 @@ export async function getCurrentUser(
   const userId = request.user.sub;
 
   try {
-    const getCurrentUserUseCase = makeGetCurrentUserUseCase();
+    const getUserByIdUseCase = makeGetUserByIdUseCase();
 
-    const { user } = await getCurrentUserUseCase.execute({ userId });
+    const { user } = await getUserByIdUseCase.execute({ userId });
 
     return reply.status(200).send({ user });
   } catch (error) {
