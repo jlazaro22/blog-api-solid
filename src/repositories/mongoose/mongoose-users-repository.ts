@@ -35,7 +35,7 @@ export class MongooseUsersRepository implements IUsersRepository {
 
   async findByUserId(
     userId: string,
-    asLean: boolean = true,
+    useLean: boolean = true,
     select?: string,
   ): Promise<
     | (Document<unknown, {}, IUser, {}, {}> &
@@ -49,7 +49,7 @@ export class MongooseUsersRepository implements IUsersRepository {
     const id = new Types.ObjectId(userId);
     const query = User.findOne(id).select(select || '-__v');
 
-    if (asLean) query.lean();
+    if (useLean) query.lean();
 
     const user = await query.exec();
 
@@ -60,5 +60,9 @@ export class MongooseUsersRepository implements IUsersRepository {
     const user = await User.create(data);
 
     return user;
+  }
+
+  async delete(userId: string): Promise<void> {
+    await User.deleteOne({ _id: userId });
   }
 }

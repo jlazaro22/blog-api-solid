@@ -44,11 +44,7 @@ export class UpdateCurrentUserUseCase {
       linkedin,
     } = userData;
 
-    const user = await this.usersRepository.findByUserId(
-      userId,
-      false,
-      '+password -__v',
-    );
+    const user = await this.usersRepository.findByUserId(userId, false);
 
     if (!user) {
       throw new CustomError({

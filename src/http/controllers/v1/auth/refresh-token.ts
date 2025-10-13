@@ -2,7 +2,7 @@ import { FastifyReply, FastifyRequest } from 'fastify';
 
 import { app } from 'app';
 import { env } from 'env';
-import { MongooseTokensRepository } from 'repositories/mongoose/mongoose-tokens-repository';
+import { makeRefreshTokenUseCase } from 'use-cases/factories/make-refresh-token-use-case';
 
 export async function refreshToken(
   request: FastifyRequest,
@@ -12,7 +12,7 @@ export async function refreshToken(
     await request.jwtVerify({ onlyCookie: true });
 
     const { sub: userId, role } = request.user;
-    const tokensRepository = new MongooseTokensRepository();
+    const refreshTokenUseCase = makeRefreshTokenUseCase();
 
     const accessToken = await reply.jwtSign(
       {
@@ -38,8 +38,10 @@ export async function refreshToken(
       },
     );
 
-    await tokensRepository.deleteAllByUserId(userId);
-    await tokensRepository.create(refreshToken, userId);
+    await refreshTokenUseCase.execute({
+      userId,
+      refreshToken,
+    });
 
     return reply
       .setCookie('refreshToken', refreshToken, {

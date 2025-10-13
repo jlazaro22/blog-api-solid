@@ -4,6 +4,7 @@ import { app } from 'app';
 import { env } from 'env';
 import { loginBodySchema } from 'http/validations/auth';
 import { makeLoginUseCase } from 'use-cases/factories/make-login-use-case';
+import { makeRefreshTokenUseCase } from 'use-cases/factories/make-refresh-token-use-case';
 
 export async function login(
   request: FastifyRequest,
@@ -12,7 +13,8 @@ export async function login(
   const { email, password } = loginBodySchema.parse(request.body);
 
   try {
-    const { loginUseCase, tokensRepository } = makeLoginUseCase();
+    const loginUseCase = makeLoginUseCase();
+    const refreshTokenUseCase = makeRefreshTokenUseCase();
 
     const { user } = await loginUseCase.execute({ email, password });
 
@@ -40,8 +42,10 @@ export async function login(
       },
     );
 
-    await tokensRepository.deleteAllByUserId(user._id.toString());
-    await tokensRepository.create(refreshToken, user._id.toString());
+    await refreshTokenUseCase.execute({
+      userId: user._id.toString(),
+      refreshToken,
+    });
 
     app.log.info(
       {

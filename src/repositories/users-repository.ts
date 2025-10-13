@@ -17,7 +17,7 @@ export interface IUsersRepository {
 
   findByUserId(
     userId: string,
-    asLean?: boolean,
+    useLean?: boolean,
     select?: string,
   ): Promise<
     | (Document<unknown, {}, IUser, {}, {}> &
@@ -30,4 +30,6 @@ export interface IUsersRepository {
   >;
 
   create(user: IUser): Promise<IUser>;
+
+  delete(userId: string): Promise<void>;
 }
