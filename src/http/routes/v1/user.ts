@@ -2,6 +2,7 @@ import { FastifyInstance } from 'fastify';
 import { deleteCurrentUser } from 'http/controllers/v1/user/delete-current-user';
 import { getAllUsers } from 'http/controllers/v1/user/get-all-users';
 import { getCurrentUser } from 'http/controllers/v1/user/get-current-user';
+import { getUserById } from 'http/controllers/v1/user/get-user-by-id';
 import { updateCurrentUser } from 'http/controllers/v1/user/update-current-user';
 
 import { authenticate } from 'http/middlewares/authenticate';
@@ -29,4 +30,6 @@ export async function userRoutes(app: FastifyInstance) {
   );
 
   app.get('/', { onRequest: [authorize(['admin'])] }, getAllUsers);
+
+  app.get('/:userId', { onRequest: [authorize(['admin'])] }, getUserById);
 }

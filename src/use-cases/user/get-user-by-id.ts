@@ -2,21 +2,21 @@ import { IUser } from 'models/user';
 import { IUsersRepository } from 'repositories/users-repository';
 import { CustomError } from 'use-cases/errors/custom-error';
 
-interface IGetCurrentUserUseCaseRequest {
+interface IGetUserByIdUseCaseRequest {
   userId: string;
 }
 
-interface IGetCurrentUserUseCaseResponse {
-  user: IUser;
+interface IGetUserByIdUseCaseResponse {
+  user: IUser | null;
 }
 
-export class GetCurrentUserUseCase {
+export class GetUserByIdUseCase {
   constructor(private usersRepository: IUsersRepository) {}
 
   async execute({
     userId,
-  }: IGetCurrentUserUseCaseRequest): Promise<IGetCurrentUserUseCaseResponse> {
-    const user = await this.usersRepository.findById(userId);
+  }: IGetUserByIdUseCaseRequest): Promise<IGetUserByIdUseCaseResponse> {
+    const user = await this.usersRepository.findById(userId, false);
 
     if (!user) {
       throw new CustomError({

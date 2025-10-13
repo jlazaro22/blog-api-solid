@@ -15,7 +15,7 @@ export interface IUsersRepository {
     | null
   >;
 
-  findByUserId(
+  findById(
     userId: string,
     useLean?: boolean,
     select?: string,

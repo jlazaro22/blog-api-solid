@@ -33,7 +33,7 @@ export class MongooseUsersRepository implements IUsersRepository {
     return user;
   }
 
-  async findByUserId(
+  async findById(
     userId: string,
     useLean: boolean = true,
     select?: string,

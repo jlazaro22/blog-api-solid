@@ -1,4 +1,5 @@
 import config from 'config';
+import { Types } from 'mongoose';
 import z from 'zod';
 
 export const updateCurrentUserBodySchema = z.object({
@@ -49,4 +50,11 @@ export const getAllUsersQuerySchema = z.object({
     .min(0, 'Offset must be greater than or equal to 0')
     .default(config.defaultResOffset)
     .optional(),
+});
+
+export const getOrDeleteUserByIdParamsSchema = z.object({
+  userId: z
+    .string('User ID is required.')
+    .trim()
+    .refine((value) => Types.ObjectId.isValid(value), 'Invalid user ID'),
 });

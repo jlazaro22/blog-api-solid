@@ -44,7 +44,7 @@ export class UpdateCurrentUserUseCase {
       linkedin,
     } = userData;
 
-    const user = await this.usersRepository.findByUserId(userId, false);
+    const user = await this.usersRepository.findById(userId, false);
 
     if (!user) {
       throw new CustomError({
