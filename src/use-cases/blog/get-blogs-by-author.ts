@@ -6,18 +6,19 @@ interface IQueryType {
   status?: 'draft' | 'published';
 }
 
-interface IGetAllBlogsUseCaseRequest {
+interface IGetBlogsByAuthorUseCaseRequest {
   userId: string;
+  authorId: string;
   limit?: number | undefined;
   offset?: number | undefined;
 }
 
-interface IGetAllBlogsUseCaseResponse {
+interface IGetBlogsByAuthorUseCaseResponse {
   total: number;
   blogs: IBlog[] | null;
 }
 
-export class GetAllBlogsUseCase {
+export class GetBlogsByAuthorUseCase {
   constructor(
     private usersRepository: IUsersRepository,
     private blogsRepository: IBlogsRepository,
@@ -25,9 +26,10 @@ export class GetAllBlogsUseCase {
 
   async execute({
     userId,
+    authorId,
     limit,
     offset,
-  }: IGetAllBlogsUseCaseRequest): Promise<IGetAllBlogsUseCaseResponse> {
+  }: IGetBlogsByAuthorUseCaseRequest): Promise<IGetBlogsByAuthorUseCaseResponse> {
     const user = await this.usersRepository.findById(userId, true, 'role');
 
     const query: IQueryType = {};
@@ -36,8 +38,13 @@ export class GetAllBlogsUseCase {
       query.status = 'published';
     }
 
-    const total = await this.blogsRepository.count(query);
-    const blogs = await this.blogsRepository.findAll(query, limit, offset);
+    const total = await this.blogsRepository.countByAuthor(authorId, query);
+    const blogs = await this.blogsRepository.findAllByAuthor(
+      authorId,
+      query,
+      limit,
+      offset,
+    );
 
     return { total, blogs };
   }

@@ -54,6 +54,8 @@ export class CreateBlogUseCase {
       author: new Types.ObjectId(userId),
     });
 
+    app.log.info({ blog }, 'Blog created successfully.');
+
     return { blog };
   }
 }

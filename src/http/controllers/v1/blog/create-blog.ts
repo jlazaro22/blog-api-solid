@@ -29,8 +29,6 @@ export async function createBlog(request: FastifyRequest, reply: FastifyReply) {
       status,
     });
 
-    app.log.info({ blog }, 'Blog created successfully.');
-
     return reply.code(201).send(blog);
   } catch (error) {
     app.log.error(error, 'Error while creating the blog.');

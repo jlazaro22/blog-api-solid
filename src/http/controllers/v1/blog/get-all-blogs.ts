@@ -1,5 +1,6 @@
-import { app } from 'app';
 import { FastifyReply, FastifyRequest } from 'fastify';
+
+import { app } from 'app';
 import { getBlogsQuerySchema } from 'http/validations/blog';
 import { makeGetAllBlogsUseCase } from 'use-cases/factories/make-get-all-blogs-use-case';
 
