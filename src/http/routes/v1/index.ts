@@ -1,4 +1,5 @@
 import { FastifyInstance, FastifyReply } from 'fastify';
+
 import { authRoutes } from './auth';
 import { blogRoutes } from './blog';
 import { userRoutes } from './user';

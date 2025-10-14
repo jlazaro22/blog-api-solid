@@ -1,3 +1,4 @@
+import config from 'config';
 import z from 'zod';
 
 export const createBlogBodySchema = z.object({
@@ -13,4 +14,21 @@ export const createBlogBodySchema = z.object({
     )
     .optional()
     .default('draft'),
+});
+
+export const getBlogsQuerySchema = z.object({
+  limit: z.coerce
+    .number()
+    .int('Limit must be an integer')
+    .positive('Limit must be a positive number')
+    .min(1, 'Limit must be between 1 and 50')
+    .max(50, 'Limit must be between 1 and 50')
+    .default(config.defaultResLimit)
+    .optional(),
+  offset: z.coerce
+    .number()
+    .int('Offset must be an integer')
+    .min(0, 'Offset must be greater than or equal to 0')
+    .default(config.defaultResOffset)
+    .optional(),
 });

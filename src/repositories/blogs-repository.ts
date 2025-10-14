@@ -16,6 +16,14 @@ export interface IBlogsRepository {
     | null
   >;
 
+  count(query: { status?: 'draft' | 'published' }): Promise<number>;
+
+  findAll(
+    query: { status?: 'draft' | 'published' },
+    limit?: number,
+    offset?: number,
+  ): Promise<IBlog[] | null>;
+
   create(data: IBlog): Promise<IBlog>;
 
   deleteAllByUserId(userId: string): Promise<void>;

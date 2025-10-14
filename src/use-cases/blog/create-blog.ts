@@ -13,7 +13,9 @@ interface ICreateBlogUseCaseRequest {
   status: IBlog['status'];
 }
 
-interface ICreateBlogUseCaseResponse {}
+interface ICreateBlogUseCaseResponse {
+  blog: IBlog;
+}
 
 export class CreateBlogUseCase {
   constructor(private blogsRepository: IBlogsRepository) {}
@@ -44,7 +46,7 @@ export class CreateBlogUseCase {
       height: data.height,
     };
 
-    const blog = this.blogsRepository.create({
+    const blog = await this.blogsRepository.create({
       title,
       content,
       banner,
@@ -52,6 +54,6 @@ export class CreateBlogUseCase {
       author: new Types.ObjectId(userId),
     });
 
-    return blog;
+    return { blog };
   }
 }
