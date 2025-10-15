@@ -1,5 +1,6 @@
 import { FastifyInstance } from 'fastify';
 import { createBlog } from 'http/controllers/v1/blog/create-blog';
+import { deleteBlog } from 'http/controllers/v1/blog/delete-blog';
 import { getAllBlogs } from 'http/controllers/v1/blog/get-all-blogs';
 import { getBlogBySlug } from 'http/controllers/v1/blog/get-blog-by-slug';
 import { getBlogsByAuthor } from 'http/controllers/v1/blog/get-blogs-by-author';
@@ -28,4 +29,6 @@ export async function blogRoutes(app: FastifyInstance) {
   );
 
   app.put('/:blogId', { onRequest: [authorize(['admin'])] }, updateBlog);
+
+  app.delete('/:blogId', { onRequest: [authorize(['admin'])] }, deleteBlog);
 }

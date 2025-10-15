@@ -34,7 +34,7 @@ export class UpdateBlogUseCase {
     status,
   }: IUpdateBlogUseCaseRequest): Promise<IUpdateBlogUseCaseResponse> {
     const user = await this.usersRepository.findById(userId, true, 'role');
-    const blog = await this.blogsRepository.findById(blogId);
+    const blog = await this.blogsRepository.findById(blogId, false);
 
     if (!blog) {
       throw new CustomError({

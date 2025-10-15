@@ -2,8 +2,8 @@ import { MongooseBlogsRepository } from 'repositories/mongoose/mongoose-blogs-re
 import { CreateBlogUseCase } from 'use-cases/blog/create-blog';
 
 export function makeCreateBlogUseCase() {
-  const blogRepository = new MongooseBlogsRepository();
-  const createBlogUseCase = new CreateBlogUseCase(blogRepository);
+  const blogsRepository = new MongooseBlogsRepository();
+  const createBlogUseCase = new CreateBlogUseCase(blogsRepository);
 
   return createBlogUseCase;
 }

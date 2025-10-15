@@ -1,10 +1,8 @@
-import { v2 as cloudinary } from 'cloudinary';
-
 import { app } from 'app';
+import { deleteFromCloudinary } from 'lib/cloudinary';
 import { IBlogsRepository } from 'repositories/blogs-repository';
 import { ITokensRepository } from 'repositories/tokens-repository';
 import { IUsersRepository } from 'repositories/users-repository';
-import { deleteFromCloudinary } from 'lib/cloudinary';
 
 interface IDeleteUserByIdUseCaseRequest {
   userId: string;
@@ -28,14 +26,14 @@ export class DeleteUserByIdUseCase {
 
     if (publicIds?.length) {
       await deleteFromCloudinary(publicIds);
-    }
 
-    app.log.info(
-      {
-        publicIds,
-      },
-      'Multiple blog banners deleted from Cloudinary.',
-    );
+      app.log.info(
+        {
+          publicIds,
+        },
+        'Multiple blog banners deleted from Cloudinary.',
+      );
+    }
 
     await this.blogsRepository.deleteAllByUserId(userId);
     app.log.info({ userId, blogs }, 'Multiple blogs deleted.');

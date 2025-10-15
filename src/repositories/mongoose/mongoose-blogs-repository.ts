@@ -79,8 +79,24 @@ export class MongooseBlogsRepository implements IBlogsRepository {
     return blogs;
   }
 
-  async findById(id: string): Promise<IBlog | null> {
-    const blog = await Blog.findById(id).select('-__v').exec();
+  async findById(
+    id: string,
+    useLean: boolean = true,
+    select?: string,
+  ): Promise<
+    | (Document<unknown, {}, IBlog, {}, {}> &
+        IBlog & {
+          _id: Types.ObjectId;
+        } & {
+          __v: number;
+        })
+    | null
+  > {
+    const query = Blog.findById(id).select(select || '-__v');
+
+    if (useLean) query.lean();
+
+    const blog = await query.exec();
 
     return blog;
   }
@@ -102,7 +118,12 @@ export class MongooseBlogsRepository implements IBlogsRepository {
   }
 
   async save(
-    blog: Document<unknown, {}, IBlog, {}, {}> & IBlog,
+    blog: Document<unknown, {}, IBlog, {}, {}> &
+      IBlog & {
+        _id: Types.ObjectId;
+      } & {
+        __v: number;
+      },
   ): Promise<IBlog> {
     await blog.save();
 
@@ -111,5 +132,9 @@ export class MongooseBlogsRepository implements IBlogsRepository {
 
   async deleteAllByUserId(userId: string): Promise<void> {
     await Blog.deleteMany({ author: userId });
+  }
+
+  async delete(id: string): Promise<void> {
+    await Blog.deleteOne({ _id: id });
   }
 }
