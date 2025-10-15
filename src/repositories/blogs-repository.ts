@@ -38,7 +38,7 @@ export interface IBlogsRepository {
 
   findById(
     id: string,
-    useLean: boolean,
+    useLean?: boolean,
     select?: string,
   ): Promise<
     | (Document<unknown, {}, IBlog, {}, {}> &
